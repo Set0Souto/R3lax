@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReLax WebApp - Pomodoro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="sidebar-toggle">☰</button>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pomodoro.html">Pomodoro</a>
+        <a href="music.html">Music</a>
+        <a href="chat.html">Chat</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+    <div class="page-layout">
+      <div class="timer-container">
+        <div class="timer-card">
+          <div class="timer-value" id="timer-display">25:00</div>
+        </div>
+        <div class="button-row">
+          <button id="start-btn">Start</button>
+          <button id="reset-btn">Reset</button>
+          <button id="pause-btn">Stop</button>
+        </div>
+      </div>
+      <aside class="lap-sidebar">
+        <h2>Laps</h2>
+        <div class="lap-controls">
+          <button id="add-lap-btn">Add Lap</button>
+          <button id="reset-laps-btn">Reset Laps</button>
+        </div>
+        <div class="lap-count-card">
+          <span>Count</span>
+          <span id="lap-count">0</span>
+        </div>
+        <ul id="lap-list"></ul>
+      </aside>
+    </div>
+    
+    <script src="script.js"></script>
+
+</body>
+</html>

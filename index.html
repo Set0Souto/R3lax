@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>R3Lax Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="sidebar-toggle">☰</button>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pomodoro.html">Pomodoro</a>
+        <a href="music.html">Music</a>
+        <a href="chat.html">Chat</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <main>
+
+    <header class="hero">
+        <p class="eyebrow"> ‍ ‍‍‍</p>
+        <h1>R3Lax Website</h1>
+        <p class="tagline">A quiet corner of the internet for deep work — timers, lofi sound, your calendar, and the people studying alongside you.</p>
+    </header>
+
+    <div class="card-grid">
+        <a href="pomodoro.html" class="card">
+            <span class="card-icon">⏱</span>
+            <h2>Pomodoro</h2>
+            <p>Focused sprints, timed breaks.</p>
+        </a>
+
+        <a href="music.html" class="card">
+            <span class="card-icon">♪</span>
+            <h2>Music</h2>
+            <p>Lofi beats to study to.</p>
+        </a>
+
+        <a href="chat.html" class="card">
+            <span class="card-icon">✦</span>
+            <h2>Chat</h2>
+            <p>Talk with others studying now.</p>
+        </a>
+
+        <a href="settings.html" class="card">
+            <span class="card-icon">⚙</span>
+            <h2>Settings</h2>
+            <p>Make it yours.</p>
+        </a>
+    </div>
+
+    <footer class="credits">
+        <h3>Made by Souto Seto</h3>
+        <p>Made for my very own Personal Project. Thank you for accessing my website!</p>
+    </footer>
+
+    </main>
+
+    <div class="bottom-player-bar hidden">
+        <audio id="music-player" preload="metadata"></audio>
+        <div class="bottom-player-controls">
+            <button id="prev-btn" class="control-btn">Previous</button>
+            <button id="play-pause-btn" class="control-btn">Play</button>
+            <button id="stop-btn" class="control-btn">Stop</button>
+            <button id="next-btn" class="control-btn">Next</button>
+        </div>
+        <div class="bottom-player-progress">
+            <div class="track-progress-header">
+                <div class="track-progress-label">Listened</div>
+                <div class="track-time">
+                    <span id="current-time">00:00</span>
+                    <span class="track-time-separator">/</span>
+                    <span id="track-duration">00:00</span>
+                </div>
+            </div>
+            <input id="track-progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Track progress">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+

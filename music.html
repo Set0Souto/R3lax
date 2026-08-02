@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ReLax WebApp - Music</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="sidebar-toggle">☰</button>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="pomodoro.html">Pomodoro</a>
+        <a href="music.html">Music</a>
+        <a href="chat.html">Chat</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <main class="music-page">
+        <section class="music-player-card">
+            <div class="player-top">
+                <div>
+                    <p class="eyebrow">Music</p>
+                    <h1>Listen to your tracks</h1>
+                    <p class="track-meta">Play, pause, and switch songs from your collection.</p>
+                </div>
+                <div class="track-info">
+                    <p id="track-title">Loading track…</p>
+                    <p id="track-artist">Select a song from the playlist.</p>
+                </div>
+            </div>
+
+            <div class="volume-control">
+                <label for="volume-slider">Volume</label>
+                <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.7">
+            </div>
+        </section>
+
+        <section class="playlist-card">
+            <h2>Playlist</h2>
+            <p>Add your MP3 files to the app folder and update the playlist in <code>script.js</code>.</p>
+            <ul id="playlist" class="playlist"></ul>
+        </section>
+    </main>
+
+    <div class="bottom-player-bar hidden">
+        <audio id="music-player" preload="metadata"></audio>
+        <div class="bottom-player-controls">
+            <button id="prev-btn" class="control-btn">Previous</button>
+            <button id="play-pause-btn" class="control-btn">Play</button>
+            <button id="stop-btn" class="control-btn">Stop</button>
+            <button id="next-btn" class="control-btn">Next</button>
+        </div>
+        <div class="bottom-player-progress">
+            <div class="track-progress-header">
+                <div class="track-progress-label">Listened</div>
+                <div class="track-time">
+                    <span id="current-time">00:00</span>
+                    <span class="track-time-separator">/</span>
+                    <span id="track-duration">00:00</span>
+                </div>
+            </div>
+            <input id="track-progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Track progress">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
