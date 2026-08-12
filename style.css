@@ -1,7 +1,9 @@
  :root {
     --app-bg: #1e2127;
-    --app-card: #15171c;
+    --app-card: rgba(21, 23, 28, 0.92);
     --app-text: #D4D4D4;
+    --top-text: #ffffff;
+    --top-subtext: #f0f0f0;
     --button-bg: #2b2f38;
     --button-hover: #3a3f4f;
     --accent-color: #7c87f7;
@@ -24,6 +26,10 @@ body {
 
 body {
     background: var(--app-bg);
+    background-image: var(--app-bg-image, none);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: var(--app-text);
     font-family: 'JetBrains Mono', sans-serif;
     display: flex;
@@ -84,14 +90,14 @@ nav a {
     text-decoration: none;
     padding: 14px 0;
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(12, 16, 23, 0.92);
     text-align: center;
     transition: background 0.2s ease, transform 0.15s ease;
 }
 
 nav a:hover,
 nav a:focus {
-    background: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.12);
     transform: translateY(-1px);
 }
 
@@ -119,14 +125,15 @@ main {
     margin: 0;
     font-size: clamp(2.5rem, 4vw, 4rem);
     line-height: 1.05;
+    color: var(--top-text);
 }
 
 .hero .tagline {
     max-width: 720px;
     margin: 0;
-    color: #b0b0b0;
-    font-size: 1rem;
-    line-height: 1.8;
+    color: var(--top-subtext);
+    font-size: 1.1rem;
+    line-height: 1.9;
 }
 
 .card-grid {
@@ -146,34 +153,35 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 14px;
-    min-height: 150px;
-    padding: 20px;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    gap: 6px;
+    min-height: 70px;
+    padding: 10px 12px;
+    border-radius: 18px;
+    background: rgba(17, 23, 33, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     text-decoration: none;
     color: var(--app-text);
 }
 
 .card-icon {
-    font-size: 32px;
+    font-size: 22px;
 }
 
 .card h2 {
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
 }
 
 .card p {
     margin: 0;
     color: #c2c2cd;
-    line-height: 1.6;
+    line-height: 1.8;
+    font-size: 1.2rem;
 }
 
 .credits {
     padding: 14px 0 0;
-    color: #8d92a1;
+    color: var(--top-text);
     font-size: 0.92rem;
     line-height: 1.5;
     margin-top: auto;
@@ -191,15 +199,19 @@ main {
     justify-content: center;
     align-items: center;
     height: calc(100vh - 80px);
-    padding: 20px;
+    padding: 32px;
     text-align: center;
     overflow: hidden;
+    background: rgba(17, 23, 33, 0.95);
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
 }
 
 .center-page h1,
 .center-page p {
     max-width: 760px;
     margin: 0 auto;
+    color: #1d1d1d;
 }
 
 .center-page .action-btn {
@@ -227,10 +239,15 @@ main {
     gap: 24px;
 }
 
+.settings-page h1 {
+    color: var(--top-text);
+}
+
 .settings-description {
     max-width: 740px;
-    line-height: 1.7;
-    color: #c8c8d2;
+    line-height: 1.8;
+    color: var(--top-subtext);
+    font-size: 1.05rem;
 }
 
 .settings-grid {
@@ -241,8 +258,8 @@ main {
 
 .setting-card,
 .preview-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(17, 23, 33, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 28px;
     padding: 24px;
     box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
@@ -301,8 +318,8 @@ select:focus {
     min-height: 140px;
     padding: 18px;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .save-notice {
@@ -535,11 +552,11 @@ nav.closed {
 
 .music-player-card,
 .playlist-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(17, 23, 33, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 28px;
   padding: 28px;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.25);
 }
 
 .player-top {
@@ -553,7 +570,7 @@ nav.closed {
 .player-top .eyebrow {
   margin: 0 0 10px;
   font-size: 0.9rem;
-  color: #94a2ff;
+  color: #ffffff;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -561,12 +578,13 @@ nav.closed {
 .music-player-card h1 {
   margin: 0;
   font-size: clamp(2rem, 3vw, 3rem);
+  color: #ffffff;
 }
 
 .track-meta,
 .track-info p {
   margin: 8px 0 0;
-  color: #c2c2cd;
+  color: #ffffff;
   line-height: 1.7;
 }
 

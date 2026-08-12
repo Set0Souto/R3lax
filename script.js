@@ -2,6 +2,7 @@ const appDefaults = {
   sound: 'click',
   soundEnabled: true,
   theme: 'dark',
+  wallpaper: 'default',
   buttonShape: 'rounded',
   musicVolume: 0.7,
 };
@@ -14,6 +15,7 @@ let lapCount = 0;
 window.addEventListener('DOMContentLoaded', function() {
   appSettings = loadSettings();
   applyBackgroundTheme(appSettings.theme);
+  applyWallpaper(appSettings.wallpaper);
   applyButtonShape(appSettings.buttonShape);
   setupSidebarToggle();
   setupTimer();
@@ -55,6 +57,7 @@ function setupSettings() {
   if (!soundSelect) return;
 
   const themeSelect = document.getElementById('theme-select');
+  const wallpaperSelect = document.getElementById('wallpaper-select');
   const shapeSelect = document.getElementById('button-shape-select');
   const soundEnabledCheckbox = document.getElementById('sound-enabled-checkbox');
   const musicVolumeSlider = document.getElementById('music-volume-slider');
@@ -63,6 +66,7 @@ function setupSettings() {
 
   soundSelect.value = appSettings.sound;
   if (themeSelect) themeSelect.value = appSettings.theme;
+  if (wallpaperSelect) wallpaperSelect.value = appSettings.wallpaper;
   if (shapeSelect) shapeSelect.value = appSettings.buttonShape;
   if (soundEnabledCheckbox) soundEnabledCheckbox.checked = appSettings.soundEnabled;
   if (musicVolumeSlider) {
@@ -81,6 +85,12 @@ function setupSettings() {
   if (themeSelect) {
     themeSelect.addEventListener('change', function() {
       updateSetting('theme', this.value);
+    });
+  }
+
+  if (wallpaperSelect) {
+    wallpaperSelect.addEventListener('change', function() {
+      updateSetting('wallpaper', this.value);
     });
   }
 
@@ -121,6 +131,10 @@ function updateSetting(key, value) {
 
   if (key === 'theme') {
     applyBackgroundTheme(value);
+  }
+
+  if (key === 'wallpaper') {
+    applyWallpaper(value);
   }
 
   if (key === 'buttonShape') {
@@ -434,7 +448,7 @@ function applyBackgroundTheme(theme) {
   const themes = {
     dark: {
       '--app-bg': '#1e2127',
-      '--app-card': '#15171c',
+      '--app-card': 'rgba(21, 23, 28, 0.92)',
       '--app-text': '#D4D4D4',
       '--button-bg': '#2b2f38',
       '--button-hover': '#3a3f4f',
@@ -462,6 +476,35 @@ function applyBackgroundTheme(theme) {
   Object.entries(themeValues).forEach(function([property, value]) {
     root.style.setProperty(property, value);
   });
+}
+
+function applyWallpaper(wallpaper) {
+  const root = document.documentElement;
+  const wallpapers = {
+    none: 'none',
+    default: 'none',
+    'solid-red': 'linear-gradient(180deg, #550000 0%, #990000 100%)',
+    'solid-blue': 'linear-gradient(180deg, #001f3f 0%, #003366 100%)',
+    'solid-green': 'linear-gradient(180deg, #003300 0%, #006600 100%)',
+    'pexels-bella-white-201200-635279': "url('pexels-bella-white-201200-635279.jpg')",
+    'pexels-kienvirak-36928654': "url('pexels-kienvirak-36928654.jpg')",
+    'pexels-oskar-gross-1074333632-34302403': "url('pexels-oskar-gross-1074333632-34302403.jpg')",
+    'pexels-sebastian-189349': "url('pexels-sebastian-189349.jpg')",
+  };
+
+  const imageWallpapers = [
+    'pexels-bella-white-201200-635279',
+    'pexels-kienvirak-36928654',
+    'pexels-oskar-gross-1074333632-34302403',
+    'pexels-sebastian-189349',
+  ];
+
+  const topTextColor = imageWallpapers.includes(wallpaper) ? '#1d1d1d' : '#ffffff';
+  const topSubtextColor = imageWallpapers.includes(wallpaper) ? '#3c3c3c' : '#f0f0f0';
+
+  root.style.setProperty('--app-bg-image', wallpapers[wallpaper] || wallpapers.none);
+  root.style.setProperty('--top-text', topTextColor);
+  root.style.setProperty('--top-subtext', topSubtextColor);
 }
 
 function applyButtonShape(shape) {
