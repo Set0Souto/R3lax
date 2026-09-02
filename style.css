@@ -187,9 +187,10 @@ main {
     margin-top: auto;
 }
 
-.credits h3,
-.credits p {
+.credits h3 {
     margin: 0;
+    font-size: 1.05rem;
+    color: var(--top-text);
 }
 
 .center-page {
@@ -325,6 +326,44 @@ select:focus {
 .save-notice {
     margin-top: 16px;
     color: #94a2ff;
+}
+
+.timer-complete-notification {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2000;
+}
+
+.timer-complete-card {
+    width: min(420px, calc(100vw - 32px));
+    background: rgba(17, 23, 33, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: 28px 24px 20px;
+    text-align: center;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.3);
+}
+
+.timer-complete-card h2 {
+    margin: 0 0 12px;
+    font-size: clamp(2rem, 4vw, 2.5rem);
+}
+
+.timer-complete-card p {
+    margin: 0 0 18px;
+    color: #d5d7df;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.timer-complete-dismiss {
+    font-size: 18px;
+    padding: 12px 18px;
+    margin: 0;
+    border-radius: 12px;
 }
 
 button {

@@ -73,6 +73,15 @@
                             <option value="none">No sound</option>
                         </select>
                     </label>
+                    <label>
+                        Timer ringtone
+                        <select id="timer-ringtone-select">
+                            <option value="italian-brainrot-ringtone">Italian brainrot</option>
+                            <option value="mobile-ringtone">Mobile</option>
+                            <option value="phone-ringtone">Phone</option>
+                            <option value="ringtone-091">Ringtone 091</option>
+                        </select>
+                    </label>
                     <label class="checkbox-label">
                         <input type="checkbox" id="sound-enabled-checkbox">
                         Enable button sounds
@@ -85,7 +94,7 @@
 
                 <div class="setting-card preview-card">
                     <h2>Live preview</h2>
-                    <p>The preview button uses your current sound and shape settings.</p>
+                    <p>The preview button tests your selected timer ringtone and current sound setting.</p>
                     <div class="preview-box" id="settings-preview-box">
                         <button id="preview-button" type="button">Try preview</button>
                     </div>

@@ -5,23 +5,44 @@ const appDefaults = {
   wallpaper: 'default',
   buttonShape: 'rounded',
   musicVolume: 0.7,
+  timerRingtone: 'ringtone-091',
+};
+
+const timerRingtoneLibrary = {
+  'italian-brainrot-ringtone': 'italian-brainrot-ringtone.mp3',
+  'mobile-ringtone': 'mobile-ringtone-542006.mp3',
+  'phone-ringtone': 'phone-ringtone-439034.mp3',
+  'ringtone-091': 'ringtone-091.mp3',
 };
 
 let appSettings = { ...appDefaults };
 let totalSeconds = 25 * 60;
 let timerInterval = null;
 let lapCount = 0;
+let timerDoneAudio = null;
 
-window.addEventListener('DOMContentLoaded', function() {
-  appSettings = loadSettings();
-  applyBackgroundTheme(appSettings.theme);
-  applyWallpaper(appSettings.wallpaper);
-  applyButtonShape(appSettings.buttonShape);
-  setupSidebarToggle();
-  setupTimer();
-  setupSettings();
-  setupMusicPlayer();
-});
+function getTimerRingtoneSource(ringtoneName) {
+  return timerRingtoneLibrary[ringtoneName] || timerRingtoneLibrary['ringtone-091'];
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('DOMContentLoaded', function() {
+    appSettings = loadSettings();
+    applyBackgroundTheme(appSettings.theme);
+    applyWallpaper(appSettings.wallpaper);
+    applyButtonShape(appSettings.buttonShape);
+    setupSidebarToggle();
+    setupTimer();
+    setupSettings();
+    setupMusicPlayer();
+  });
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = {
+    getTimerRingtoneSource,
+  };
+}
 
 function setupSidebarToggle() {
   const toggle = document.getElementById('sidebar-toggle');
@@ -61,6 +82,7 @@ function setupSettings() {
   const shapeSelect = document.getElementById('button-shape-select');
   const soundEnabledCheckbox = document.getElementById('sound-enabled-checkbox');
   const musicVolumeSlider = document.getElementById('music-volume-slider');
+  const ringtoneSelect = document.getElementById('timer-ringtone-select');
   const previewButton = document.getElementById('preview-button');
   const settingsNotice = document.getElementById('settings-save-notice');
 
@@ -68,6 +90,7 @@ function setupSettings() {
   if (themeSelect) themeSelect.value = appSettings.theme;
   if (wallpaperSelect) wallpaperSelect.value = appSettings.wallpaper;
   if (shapeSelect) shapeSelect.value = appSettings.buttonShape;
+  if (ringtoneSelect) ringtoneSelect.value = appSettings.timerRingtone || 'ringtone-091';
   if (soundEnabledCheckbox) soundEnabledCheckbox.checked = appSettings.soundEnabled;
   if (musicVolumeSlider) {
     const savedMusicVolume = Number(appSettings.musicVolume);
@@ -100,6 +123,12 @@ function setupSettings() {
     });
   }
 
+  if (ringtoneSelect) {
+    ringtoneSelect.addEventListener('change', function() {
+      updateSetting('timerRingtone', this.value);
+    });
+  }
+
   if (soundEnabledCheckbox) {
     soundEnabledCheckbox.addEventListener('change', function() {
       updateSetting('soundEnabled', this.checked);
@@ -114,11 +143,16 @@ function setupSettings() {
 
   if (previewButton) {
     previewButton.addEventListener('click', function() {
-      playClickSound();
-      previewButton.textContent = appSettings.soundEnabled ? 'Playing...' : 'Muted';
+      if (!appSettings.soundEnabled) {
+        previewButton.textContent = 'Preview (Muted)';
+        return;
+      }
+
+      previewButton.textContent = 'Playing...';
+      playTimerPreview();
       setTimeout(function() {
-        previewButton.textContent = 'Try preview';
-      }, 400);
+        applySettingsPreview();
+      }, 1200);
     });
   }
 
@@ -519,11 +553,19 @@ function applySettingsPreview() {
 
   if (!appSettings.soundEnabled) {
     previewButton.textContent = 'Preview (Muted)';
-  } else if (appSettings.sound === 'beep') {
-    previewButton.textContent = 'Preview beep';
   } else {
-    previewButton.textContent = 'Preview click';
+    const toneLabel = appSettings.timerRingtone || 'ringtone-091';
+    previewButton.textContent = 'Preview ' + toneLabel.replace(/-/g, ' ');
   }
+}
+
+function playTimerPreview() {
+  const ringtoneSource = getTimerRingtoneSource(appSettings.timerRingtone || 'ringtone-091');
+  const previewAudio = new Audio(ringtoneSource);
+  previewAudio.volume = 0.7;
+  previewAudio.play().catch(function(error) {
+    console.warn('Timer ringtone preview failed to play:', error);
+  });
 }
 
 function playClickSound() {
@@ -572,6 +614,62 @@ function updateDisplay() {
   display.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
 }
 
+function ensureTimerNotification() {
+  let notification = document.getElementById('timer-complete-notification');
+  if (notification) return notification;
+
+  notification = document.createElement('div');
+  notification.id = 'timer-complete-notification';
+  notification.className = 'timer-complete-notification hidden';
+  notification.innerHTML = [
+    '<div class="timer-complete-card">',
+    '  <h2>Timer done</h2>',
+    '  <p>Your timer is finished.</p>',
+    '  <button type="button" class="timer-complete-dismiss">Dismiss</button>',
+    '</div>'
+  ].join('');
+
+  const dismissButton = notification.querySelector('.timer-complete-dismiss');
+  if (dismissButton) {
+    dismissButton.addEventListener('click', function() {
+      dismissTimerNotification();
+    });
+  }
+
+  document.body.appendChild(notification);
+  return notification;
+}
+
+function dismissTimerNotification() {
+  const notification = document.getElementById('timer-complete-notification');
+  if (notification) {
+    notification.classList.add('hidden');
+  }
+
+  if (timerDoneAudio) {
+    timerDoneAudio.pause();
+    timerDoneAudio.currentTime = 0;
+    timerDoneAudio = null;
+  }
+}
+
+function showTimerNotification() {
+  const notification = ensureTimerNotification();
+  notification.classList.remove('hidden');
+
+  if (!appSettings.soundEnabled) {
+    return;
+  }
+
+  const ringtoneSource = getTimerRingtoneSource(appSettings.timerRingtone || 'ringtone-091');
+  timerDoneAudio = new Audio(ringtoneSource);
+  timerDoneAudio.loop = true;
+  timerDoneAudio.volume = 0.8;
+  timerDoneAudio.play().catch(function(error) {
+    console.warn('Timer completion ringtone failed to play:', error);
+  });
+}
+
 function startTimer() {
   playClickSound();
   if (timerInterval !== null) return;
@@ -583,7 +681,7 @@ function startTimer() {
     if (totalSeconds <= 0) {
       clearInterval(timerInterval);
       timerInterval = null;
-      alert("Time's up!");
+      showTimerNotification();
     }
   }, 1000);
 }
@@ -598,6 +696,7 @@ function stopTimer() {
 
 function resetTimer() {
   playClickSound();
+  dismissTimerNotification();
   if (timerInterval !== null) {
     clearInterval(timerInterval);
     timerInterval = null;
