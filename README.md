@@ -1,21 +1,16 @@
-# Personal Project WebApp
+# R3lax Website - A website made for you to focus on studying
 
-This is a static webapp. The repository is set up to deploy to GitHub Pages automatically via GitHub Actions when you push to the `main` branch.
+Hello! This website is made for my very own Personal Project made to focus on your work session (or your studying arc)!!!
 
-Quick steps to publish:
+What is this website mainly for:
 
-1. Create a repository on GitHub (or use `gh repo create`).
-2. From this project folder run:
+1. Pomodoro Timer for studying
+2. Music/BGM/lofi for studying
+3. Chatting System with AI and others (Currently in development)
+4. Calander/Notebook Everyday Managing System (Currently in developmet)
+5. Something FUN (Currently in development)
 
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-git branch -M main
-git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPO>.git
-git push -u origin main
-```
+I am a very newbie to coding, so I used AI in some of the systems in this websites. Please contact me when you found bugs! If you have any sugesttions or any ideas about my website, contact me! Thank you very much for accessing my website!
 
-After the push the workflow `.github/workflows/deploy.yml` will run and publish the repository root to the `gh-pages` branch. Your site will be available at `https://<YOUR_USERNAME>.github.io/<YOUR_REPO>` within a few minutes.
-
-If you prefer serving from `main` or the `/docs` folder, change the action's `publish_dir` or GitHub Pages settings in the repository Settings → Pages.
+Made by Set0Souto/Swordset/Clarka 
+ChatGPT Used
