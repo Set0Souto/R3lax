@@ -155,8 +155,7 @@ main {
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-    height: 40%;
-    min-height: 70px;
+    height: 250px;
     padding: 10px 12px;
     border-radius: 18px;
     background: rgba(17, 23, 33, 0.95);
