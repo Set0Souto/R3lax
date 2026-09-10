@@ -118,7 +118,6 @@ main {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    font-size: 24px;
     padding: 14px 0;
 }
 
@@ -139,7 +138,7 @@ main {
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 18px;
     width: 100%;
     margin-top: 20px;
@@ -155,7 +154,8 @@ main {
     flex-direction: column;
     justify-content: center;
     gap: 6px;
-    height: 250px;
+    height: 40%;
+    min-height: 70px;
     padding: 10px 12px;
     border-radius: 18px;
     background: rgba(17, 23, 33, 0.95);
@@ -178,6 +178,20 @@ main {
     color: #c2c2cd;
     line-height: 1.8;
     font-size: 1.2rem;
+}
+
+.credits {
+    padding: 14px 0 0;
+    color: var(--top-text);
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin-top: auto;
+}
+
+.credits h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--top-text);
 }
 
 .center-page {
@@ -758,3 +772,15 @@ nav.closed {
   }
 }
 
+.love {
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  padding: 100px 20px;
+  font-size: 1.25rem;
+  border: 5px solid black;
+  border-radius: 12px;
+}
