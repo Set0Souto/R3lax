@@ -772,15 +772,95 @@ nav.closed {
   }
 }
 
+.login-page {
+  background: #10151d;
+}
+
 .love {
-  display: grid;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 500px;
+  margin: 100px 0 0 500px;
+  width: 550px;
+  height: 360px;
   padding: 100px 20px;
   font-size: 1.25rem;
-  border: 5px solid black;
+}
+
+.love h5 {
+  margin-bottom: 10px;
+  font-size: 7.5rem;
+}
+
+.love p {
+  font-size: 1.25rem;
+  margin-top: 10px;
+  color: #a0a0a0;
+  width: 100%
+}
+
+.me {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 100px 0 0 100px;
+  width: 400px;
+  height: 600px;
+  padding: 50px 20px;
+  font-size: 1.25rem;
+  text-align: left;
+  border: 10px solid #2c2f35;
   border-radius: 12px;
+  background-image: radial-gradient(circle at top left, rgba(255,255,255,0.16), transparent 22%),
+                    linear-gradient(180deg, #2f343d 0%, #424954 100%);
+}
+
+.login-page h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.login-page p {
+    font-size: 10px;
+    margin-bottom: 20px;
+}
+
+lable[for="email"] {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#email {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+lable[for="password"] {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#password {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+
+button2 {
+    font-size: 16px;
+    padding: 12px 24px;
+    align-self: center;
+    border-radius: 8px;
+    background-color: #757fc0;
+    border: none;
+    cursor: pointer;
 }
