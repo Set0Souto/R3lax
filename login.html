@@ -9,21 +9,38 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
         <link rel="stylesheet" href="style.css">
     </head>
-</html>
-<body>
+    <body class="login-page">
     <div class="love">
-        <h5>Welcome to R3Lax</h5>
-        <p class="mouse">Welcome to the R3Lax Website, where we focus with pomodoro timer and "Relax" with music. Please login to access the website.</p>
+        <h5>Where we Relax.</h5>
+        <p class="mouse">Welcome to R3lax, where focus is the key to productivity and success. Chill with relaxing music and focus with pomodoro timer.</p>
     </div>
     
     <div class="me"> 
-        <form id="loginForm">
-            <lable for="email">Your Email</lable>
-            <input type="email" id="email" placeholder="you@example.com" required />
-            
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="••••••••" required />
-            <button type="submit">Sign In</button>
-        </form>
+            <h2 id="login-heading">Hello, welcome back!</h2>
+            <p id="login-subheading">Please sign in to access the page.</p>
+            <form id="loginForm">
+                <lable for="email">Email Address</lable>
+                <input type="email" id="email" placeholder="you@example.com" required />
+                
+                <lable for="password">Password</lable>
+                <input type="password" id="password" placeholder="••••••••" required />
+                <button2 type="submit">Sign In</button2>
+            </form>
     </div>
-</body>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        });
+
+        // Make button2 work as a submit button
+        const button2 = document.querySelector('button2');
+        if (button2) {
+            button2.addEventListener('click', function() {
+                document.getElementById('loginForm').submit();
+            });
+        }
+    </script>
+    </body>
+</html>
