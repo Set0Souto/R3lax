@@ -774,6 +774,7 @@ nav.closed {
 
 .login-page {
   background: #10151d;
+  justify-content: center;
 }
 
 .love {
@@ -781,7 +782,7 @@ nav.closed {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 0 0 400px;
+  margin: 100px 0 0;
   width: 550px;
   height: 360px;
   padding: 100px 20px;
@@ -804,7 +805,7 @@ nav.closed {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 100px 0 0 100px;
+  margin: 100px 0 0;
   width: 400px;
   height: 600px;
   padding: 50px 20px;
