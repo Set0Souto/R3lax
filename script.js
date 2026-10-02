@@ -738,3 +738,4 @@ function resetLaps() {
     lapList.innerHTML = '';
   }
 }
+
