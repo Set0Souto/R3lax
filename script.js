@@ -4,6 +4,7 @@ const appDefaults = {
   theme: 'dark',
   wallpaper: 'default',
   buttonShape: 'rounded',
+  navLayout: 'sidebar',
   musicVolume: 0.7,
   timerRingtone: 'ringtone-091',
 };
@@ -31,6 +32,7 @@ if (typeof window !== 'undefined') {
     applyBackgroundTheme(appSettings.theme);
     applyWallpaper(appSettings.wallpaper);
     applyButtonShape(appSettings.buttonShape);
+    applyNavigationLayout(appSettings.navLayout);
     setupSidebarToggle();
     setupTimer();
     setupSettings();
@@ -52,6 +54,14 @@ function setupSidebarToggle() {
   toggle.addEventListener('click', function() {
     nav.classList.toggle('closed');
   });
+}
+
+function applyNavigationLayout(layout) {
+  const isTopNavigation = layout === 'top';
+  document.body.classList.toggle('top-navigation', isTopNavigation);
+
+  const nav = document.querySelector('nav');
+  if (nav) nav.classList.remove('closed');
 }
 
 function setupTimer() {
@@ -83,6 +93,7 @@ function setupSettings() {
   const soundEnabledCheckbox = document.getElementById('sound-enabled-checkbox');
   const musicVolumeSlider = document.getElementById('music-volume-slider');
   const ringtoneSelect = document.getElementById('timer-ringtone-select');
+  const navigationLayoutSelect = document.getElementById('navigation-layout-select');
   const previewButton = document.getElementById('preview-button');
   const settingsNotice = document.getElementById('settings-save-notice');
 
@@ -90,6 +101,7 @@ function setupSettings() {
   if (themeSelect) themeSelect.value = appSettings.theme;
   if (wallpaperSelect) wallpaperSelect.value = appSettings.wallpaper;
   if (shapeSelect) shapeSelect.value = appSettings.buttonShape;
+  if (navigationLayoutSelect) navigationLayoutSelect.value = appSettings.navLayout;
   if (ringtoneSelect) ringtoneSelect.value = appSettings.timerRingtone || 'ringtone-091';
   if (soundEnabledCheckbox) soundEnabledCheckbox.checked = appSettings.soundEnabled;
   if (musicVolumeSlider) {
@@ -120,6 +132,12 @@ function setupSettings() {
   if (shapeSelect) {
     shapeSelect.addEventListener('change', function() {
       updateSetting('buttonShape', this.value);
+    });
+  }
+
+  if (navigationLayoutSelect) {
+    navigationLayoutSelect.addEventListener('change', function() {
+      updateSetting('navLayout', this.value);
     });
   }
 
@@ -173,6 +191,10 @@ function updateSetting(key, value) {
 
   if (key === 'buttonShape') {
     applyButtonShape(value);
+  }
+
+  if (key === 'navLayout') {
+    applyNavigationLayout(value);
   }
 
   if (key === 'musicVolume') {
