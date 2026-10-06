@@ -37,6 +37,7 @@ if (typeof window !== 'undefined') {
     setupTimer();
     setupSettings();
     setupMusicPlayer();
+    setupCalendar();
   });
 }
 
@@ -54,6 +55,93 @@ function setupSidebarToggle() {
   toggle.addEventListener('click', function() {
     nav.classList.toggle('closed');
   });
+}
+
+function setupCalendar() {
+  const daysContainer = document.getElementById('calendar-days');
+  const monthLabel = document.getElementById('calendar-month');
+  const selectedDateLabel = document.getElementById('selected-date');
+  const previousButton = document.getElementById('calendar-previous');
+  const nextButton = document.getElementById('calendar-next');
+  const todayButton = document.getElementById('calendar-today');
+  if (!daysContainer || !monthLabel || !selectedDateLabel) return;
+
+  const today = new Date();
+  let selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  let displayedMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  function renderCalendar() {
+    const year = displayedMonth.getFullYear();
+    const month = displayedMonth.getMonth();
+    const firstWeekday = new Date(year, month, 1).getDay();
+    const gridStart = new Date(year, month, 1 - firstWeekday);
+
+    monthLabel.textContent = displayedMonth.toLocaleDateString(undefined, {
+      month: 'long',
+      year: 'numeric',
+    });
+    selectedDateLabel.textContent = `Selected: ${selectedDate.toLocaleDateString(undefined, {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })}`;
+    daysContainer.replaceChildren();
+
+    for (let index = 0; index < 42; index += 1) {
+      const date = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + index);
+      const dayButton = document.createElement('button');
+      const isSameDate = (left, right) => (
+        left.getFullYear() === right.getFullYear()
+        && left.getMonth() === right.getMonth()
+        && left.getDate() === right.getDate()
+      );
+
+      dayButton.type = 'button';
+      dayButton.className = 'calendar-day';
+      dayButton.textContent = String(date.getDate());
+      dayButton.setAttribute('aria-label', date.toLocaleDateString(undefined, {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      }));
+      dayButton.setAttribute('aria-pressed', String(isSameDate(date, selectedDate)));
+
+      if (date.getMonth() !== month) dayButton.classList.add('outside-month');
+      if (isSameDate(date, today)) dayButton.classList.add('is-today');
+      if (isSameDate(date, selectedDate)) dayButton.classList.add('is-selected');
+
+      dayButton.addEventListener('click', function() {
+        selectedDate = date;
+        displayedMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+        renderCalendar();
+      });
+      daysContainer.appendChild(dayButton);
+    }
+  }
+
+  if (previousButton) {
+    previousButton.addEventListener('click', function() {
+      displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() - 1, 1);
+      renderCalendar();
+    });
+  }
+  if (nextButton) {
+    nextButton.addEventListener('click', function() {
+      displayedMonth = new Date(displayedMonth.getFullYear(), displayedMonth.getMonth() + 1, 1);
+      renderCalendar();
+    });
+  }
+  if (todayButton) {
+    todayButton.addEventListener('click', function() {
+      selectedDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      displayedMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      renderCalendar();
+    });
+  }
+
+  renderCalendar();
 }
 
 function applyNavigationLayout(layout) {
@@ -760,4 +848,3 @@ function resetLaps() {
     lapList.innerHTML = '';
   }
 }
-
