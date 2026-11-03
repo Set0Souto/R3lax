@@ -16,6 +16,33 @@
     box-sizing: border-box;
 }
 
+.auto-hide-scrollbar {
+    scrollbar-width: none;
+}
+
+.auto-hide-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.auto-hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.auto-hide-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 999px;
+}
+
+.auto-hide-scrollbar.is-scrolling {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 212, 212, 0.55) transparent;
+}
+
+.auto-hide-scrollbar.is-scrolling::-webkit-scrollbar-thumb {
+    background: rgba(212, 212, 212, 0.55);
+}
+
 html,
 body {
     margin: 0;
@@ -77,10 +104,10 @@ nav {
 nav::before {
     content: '';
     position: absolute;
-    top: 95px;
+    top: 105px;
     left: 20px;
     right: 20px;
-    height: 1px;
+    height: 2px;
     background: rgba(255, 255, 255, 0.12);
 }
 
@@ -152,7 +179,23 @@ main {
     gap: 18px;
     max-width: 1200px;
     margin: 0 auto;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.home-page {
+    position: relative;
+}
+
+.home-page .hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 40px);
+    max-width: 720px;
+    align-items: center;
+    text-align: center;
+    transform: translate(-50%, -50%);
 }
 
 .hero {
@@ -170,14 +213,15 @@ main {
 }
 
 .hero .tagline {
-    max-width: 760px;
+    max-width: 720px;
     margin: 0;
     color: var(--top-subtext);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     line-height: 1.9;
 }
 
 .card-grid {
+    align-items: end; 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 18px;
@@ -190,13 +234,16 @@ main {
     padding-right: 4px;
 }
 
+.home-page .card-grid {
+    grid-row: 2;
+}
+
 .card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     gap: 6px;
-    height: 40%;
-    min-height: 70px;
+    height: 7.5%;
     padding: 10px 12px;
     border-radius: 18px;
     background: rgba(17, 23, 33, 0.95);
@@ -980,7 +1027,6 @@ nav.closed {
 
 .login-page {
   background: #10151d;
-  justify-content: center;
 }
 
 .love {
@@ -988,7 +1034,7 @@ nav.closed {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 0 0;
+  margin: 100px 0 0 400px;
   width: 550px;
   height: 360px;
   padding: 100px 20px;
@@ -1011,7 +1057,7 @@ nav.closed {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 100px 0 0;
+  margin: 100px 0 0 100px;
   width: 400px;
   height: 600px;
   padding: 50px 20px;
@@ -1070,4 +1116,135 @@ button2 {
     background-color: #757fc0;
     border: none;
     cursor: pointer;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Fill full viewport height */
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #e0e0e0;
+}
+
+.chat-header {
+  padding: 1rem;
+  background: #075e54;
+  color: white;
+}
+
+/* This is the magic rule */
+.chat-messages {
+  flex: 1;               /* Takes up all remaining vertical space */
+  overflow-y: auto;     /* Enables vertical scrollbar only when needed */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;          /* Space between message bubbles */
+  background: rgba(30, 30, 30, 0.30);
+backdrop-filter: blur(20px);
+  border : 0px;
+  border-radius: 18px;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+/* Messages from others (left aligned) */
+.chat-recieved {
+  max-width: 500px;
+  align-self: flex-start;
+  background-color: #d6d6d6;
+  border: 0px;
+  border-radius: 8px;
+  color: #333333;
+}
+
+.chat-recieved p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chat-recieved .timestamp {
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+
+/* Messages from you (right aligned) */
+.chat-sent {
+  align-self: flex-end;
+  background-color: #c1ff91;
+  border: 1px solid #c1ff91;
+  border-radius: 8px;
+  color: #333333;
+}
+
+.chat-sent p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chat-sent .timestamp {
+  padding-right: 10px;
+  padding-bottom: 5px;
+}
+
+.timestamp {
+  display: block;
+  font-size: 0.7rem;
+  color: #888;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.chat-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  align-self: stretch;
+}
+
+label[for="message-input"] {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#message-input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+}
+
+button3 {
+  flex: 0 0 auto;
+    display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #c1ff91;
+  color: #333;
+  cursor: pointer;
+}
+
+button3 img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }

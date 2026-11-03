@@ -33,6 +33,7 @@ if (typeof window !== 'undefined') {
     applyWallpaper(appSettings.wallpaper);
     applyButtonShape(appSettings.buttonShape);
     applyNavigationLayout(appSettings.navLayout);
+    setupAutoHideScrollbars();
     setupSidebarToggle();
     setupTimer();
     setupSettings();
@@ -142,6 +143,22 @@ function setupCalendar() {
   }
 
   renderCalendar();
+}
+
+function setupAutoHideScrollbars() {
+  const scrollContainers = document.querySelectorAll('main, .card-grid, nav');
+
+  scrollContainers.forEach(function(container) {
+    let hideScrollbarTimeout;
+    container.classList.add('auto-hide-scrollbar');
+    container.addEventListener('scroll', function() {
+      container.classList.add('is-scrolling');
+      clearTimeout(hideScrollbarTimeout);
+      hideScrollbarTimeout = setTimeout(function() {
+        container.classList.remove('is-scrolling');
+      }, 700);
+    }, { passive: true });
+  });
 }
 
 function applyNavigationLayout(layout) {
@@ -553,7 +570,9 @@ function setupMusicPlayer() {
   setTrack(currentTrackIndex);
   const initialVolume = Number(appSettings.musicVolume);
   const normalizedVolume = !Number.isNaN(initialVolume) ? initialVolume : 0.7;
-  volumeSlider.value = String(normalizedVolume);
+  if (volumeSlider) {
+    volumeSlider.value = String(normalizedVolume);
+  }
   audio.volume = normalizedVolume;
 }
 

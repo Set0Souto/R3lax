@@ -2,28 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>R3Lax Website</title>
+    <title>Home|R3Lax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="b00k.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // PASTE YOUR EXACT firebaseConfig HERE AGAIN
+        const firebaseConfig = {
+            apiKey: "AIzaSyCPEOFfR1kW2NQ3cWlTLQjJfpjlgCTQDPk",
+            authDomain: "r3lax-ppw14.firebaseapp.com",
+            projectId: "r3lax-ppw14",
+            storageBucket: "r3lax-ppw14.firebasestorage.app",
+            messagingSenderId: "495353535290",
+            appId: "1:495353535290:web:958d1ef38a6ba429460e03",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        // THE GUARD: Check if a user is logged in
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                // If no user is found, kick them back to the login page immediately
+            }
+        });
+    </script>
 </head>
-<body>
+
+    <header class="mainnav">
+
+    </header>
+    
     <button id="sidebar-toggle" aria-label="Toggle side navigation">☰</button>
 
     <nav>
-        <a class="active" href="index.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="pomodoro.html">Pomodoro</a>
         <a href="music.html">Music</a>
+        <a href="calendar.html">Management</a>
         <a href="chat.html">Chat</a>
         <a href="settings.html">Settings</a>
-        <a href="login.html">Test ahhh</a>
+        <a href="#" id="logoutBtn" style="color: #ff4d4d; font-weight: bold;">Logout</a>
     </nav>
 
-    <main>
+    <main class="home-page">
     <header class="hero">
-        <h1>Welcome to R3Lax</h1>
+        <h1>Welcome to R3lax</h1>
         <p class="tagline">A quiet corner of the internet for deep work — timers, lofi sound, your calendar, and the people studying alongside you.</p>
     </header>
 
@@ -31,25 +60,21 @@
         <a href="pomodoro.html" class="card">
             <span class="card-icon">⏱</span>
             <h2>Pomodoro</h2>
-            <p>Focused sprints, timed breaks.</p>
         </a>
 
         <a href="music.html" class="card">
             <span class="card-icon">♪</span>
             <h2>Music</h2>
-            <p>Lofi beats to study to.</p>
         </a>
 
         <a href="chat.html" class="card">
             <span class="card-icon">✦</span>
             <h2>Chat</h2>
-            <p>Talk with others studying now.</p>
         </a>
 
         <a href="settings.html" class="card">
             <span class="card-icon">⚙</span>
             <h2>Settings</h2>
-            <p>Make it yours.</p>
         </a>
     </div>
     
@@ -77,7 +102,17 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                alert("Signed out successfully!");
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                alert("Error signing out: " + error.message);
+            });
+        });
+    </script>
 </body>
 </html>
-
 
