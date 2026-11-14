@@ -1027,6 +1027,7 @@ nav.closed {
 
 .login-page {
   background: #10151d;
+  justify-content: center;
 }
 
 .love {
@@ -1034,7 +1035,7 @@ nav.closed {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 100px 0 0 400px;
+  margin: 100px 0 0;
   width: 550px;
   height: 360px;
   padding: 100px 20px;
@@ -1108,14 +1109,23 @@ lable[for="password"] {
   }
 
 
-button2 {
+button2,
+.button2 {
     font-size: 16px;
     padding: 12px 24px;
     align-self: center;
     border-radius: 8px;
-    background-color: #757fc0;
+    background-color: #656464;
     border: none;
     cursor: pointer;
+}
+
+.me a {
+    display: block;
+    text-decoration: none;
+    margin-top: 32px;
+    color: #cccccc;
+    text-decoration: underline;
 }
 
 .chat-container {
@@ -1131,6 +1141,44 @@ button2 {
   padding: 1rem;
   background: #075e54;
   color: white;
+}
+
+.chat-access-gate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.chat-access-card {
+  max-width: 440px;
+  padding: 32px;
+  border: 1px solid rgba(212, 212, 212, 0.2);
+  border-radius: 18px;
+  background: var(--app-card);
+}
+
+.chat-lock {
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+
+.chat-access-card h1 {
+  margin: 0 0 12px;
+  color: var(--top-text);
+}
+
+.chat-access-card p {
+  margin: 0 0 20px;
+}
+
+.chat-login-link {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: var(--button-radius);
+  background: var(--accent-color);
+  color: #ffffff;
+  text-decoration: none;
 }
 
 /* This is the magic rule */
@@ -1248,3 +1296,4 @@ button3 img {
   height: 20px;
   object-fit: contain;
 }
+

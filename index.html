@@ -25,12 +25,6 @@
 
         firebase.initializeApp(firebaseConfig);
 
-        // THE GUARD: Check if a user is logged in
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                // If no user is found, kick them back to the login page immediately
-            }
-        });
     </script>
 </head>
 
@@ -107,7 +101,6 @@
             e.preventDefault();
             firebase.auth().signOut().then(() => {
                 alert("Signed out successfully!");
-                window.location.href = 'login.html';
             }).catch((error) => {
                 alert("Error signing out: " + error.message);
             });
@@ -115,4 +108,3 @@
     </script>
 </body>
 </html>
-

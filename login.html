@@ -17,7 +17,7 @@
     
     <div class="me"> 
             <h2 id="login-heading">Hello, welcome back!</h2>
-            <p id="login-subheading">Please sign in to access the page.</p>
+            <p id="login-subheading">Sign in to unlock Chat, or continue without an account.</p>
             <form id="loginForm">
                 <label for="email">Email Address</label>
                 <input type="text" id="email" placeholder="you@example.com" required />
@@ -26,6 +26,7 @@
                 <input type="password" id="password" placeholder="••••••••" required />
                 
                 <button type="submit" class="button2">Sign In</button>
+                <a href="index.html">Continue without Login</a>
             </form>
     </div>
 
@@ -66,8 +67,8 @@
             // Actual Firebase Sign-In
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    // Success! Redirect to main page
-                    window.location.href = 'index.html';
+                    const redirect = new URLSearchParams(window.location.search).get('redirect');
+                    window.location.href = redirect === 'chat.html' ? redirect : 'index.html';
                 })
                 .catch((error) => {
                     // Handle errors

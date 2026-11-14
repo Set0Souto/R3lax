@@ -39,6 +39,7 @@ if (typeof window !== 'undefined') {
     setupSettings();
     setupMusicPlayer();
     setupCalendar();
+    setupChat();
   });
 }
 
@@ -143,6 +144,125 @@ function setupCalendar() {
   }
 
   renderCalendar();
+}
+
+function setupChat() {
+  const messageList = document.getElementById('message-list');
+  const chatForm = document.getElementById('chat-form');
+  const messageInput = document.getElementById('message-input');
+  if (!messageList || !chatForm || !messageInput) return;
+
+  const storageKey = 'r3lax-test2-chat';
+  const senderKey = 'r3lax-test2-chat-sender';
+  let senderId = sessionStorage.getItem(senderKey);
+  if (!senderId) {
+    senderId = 'user-' + Math.random().toString(36).slice(2, 10);
+    sessionStorage.setItem(senderKey, senderId);
+  }
+
+  let messages = readChatMessages(storageKey);
+  messages.forEach(function(message) {
+    messageList.insertBefore(createChatBubble(message, senderId), chatForm);
+  });
+  messageList.scrollTop = messageList.scrollHeight;
+
+  function sendCurrentMessage() {
+    const text = messageInput.value.trim();
+    if (!text) return;
+
+    const message = {
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      senderId: senderId,
+      text: text.slice(0, 500),
+      time: new Date().toLocaleTimeString(undefined, {
+        hour: 'numeric',
+        minute: '2-digit',
+      }),
+    };
+
+    messages.push(message);
+    localStorage.setItem(storageKey, JSON.stringify(messages));
+    messageList.insertBefore(createChatBubble(message, senderId), chatForm);
+    messageList.scrollTop = messageList.scrollHeight;
+    messageInput.value = '';
+    messageInput.focus();
+
+    if (chatChannel) chatChannel.postMessage(message);
+  }
+
+  chatForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    sendCurrentMessage();
+  });
+
+  const sendButton = document.getElementById('send-button');
+  if (sendButton) {
+    sendButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      sendCurrentMessage();
+    });
+  }
+
+  let chatChannel = null;
+  if (typeof BroadcastChannel !== 'undefined') {
+    chatChannel = new BroadcastChannel('r3lax-test2-chat');
+    chatChannel.addEventListener('message', function(event) {
+      appendIncomingChatMessage(event.data);
+    });
+  }
+
+  window.addEventListener('storage', function(event) {
+    if (event.key !== storageKey || !event.newValue) return;
+    let storedMessages = [];
+    try {
+      storedMessages = JSON.parse(event.newValue);
+    } catch (error) {
+      return;
+    }
+    if (!Array.isArray(storedMessages)) return;
+
+    storedMessages.forEach(function(message) {
+      appendIncomingChatMessage(message);
+    });
+  });
+
+  function appendIncomingChatMessage(message) {
+    if (!message || !message.id || !message.text) return;
+    if (messages.some(function(item) { return item.id === message.id; })) return;
+
+    messages.push(message);
+    localStorage.setItem(storageKey, JSON.stringify(messages));
+    messageList.insertBefore(createChatBubble(message, senderId), chatForm);
+    messageList.scrollTop = messageList.scrollHeight;
+  }
+}
+
+function readChatMessages(storageKey) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(function(message) {
+      return message && typeof message.id === 'string' && typeof message.text === 'string';
+    });
+  } catch (error) {
+    return [];
+  }
+}
+
+function createChatBubble(message, senderId) {
+  const bubble = document.createElement('div');
+  bubble.className = message.senderId === senderId ? 'chat-sent' : 'chat-recieved';
+
+  const text = document.createElement('p');
+  text.textContent = message.text;
+
+  const time = document.createElement('span');
+  time.className = 'timestamp';
+  time.textContent = typeof message.time === 'string' ? message.time : '';
+
+  bubble.appendChild(text);
+  bubble.appendChild(time);
+  return bubble;
 }
 
 function setupAutoHideScrollbars() {

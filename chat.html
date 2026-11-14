@@ -16,13 +16,22 @@
         <a href="index.html">Home</a>
         <a href="pomodoro.html">Pomodoro</a>
         <a href="music.html">Music</a>
-        <a class="active" href="calendar.html" aria-current="page">Management</a>
-        <a href="chat.html">Chat</a>
+        <a href="calendar.html">Management</a>
+        <a class="active" href="chat.html" aria-current="page">Chat</a>
         <a href="settings.html">Settings</a>
         <a href="login.html">Test ahhh</a>
     </nav>
 
-    <main class="chat-messages" id="message-list">
+    <main class="chat-access-gate" id="chat-access-gate" aria-live="polite">
+        <div class="chat-access-card">
+            <div class="chat-lock" aria-hidden="true">🔒</div>
+            <h1 id="chat-access-heading">Checking sign-in...</h1>
+            <p id="chat-access-message">Please wait while we verify your account.</p>
+            <a class="chat-login-link hidden" id="chat-login-link" href="login.html?redirect=chat.html">Sign in to use Chat</a>
+        </div>
+    </main>
+
+    <main class="chat-messages hidden" id="message-list">
         
         <div class="chat-recieved">
             <p>Welcome to the Chat! dumbass I love minecraft and I completely frogot lmaooo fuckkk</p>
@@ -45,7 +54,6 @@
             <img src="send.png" alt="">
         </button3>
     </form>
-    </div>
     </main>
 
     <div class="bottom-player-bar hidden">
@@ -69,6 +77,42 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCPEOFfR1kW2NQ3cWlTLQjJfpjlgCTQDPk",
+            authDomain: "r3lax-ppw14.firebaseapp.com",
+            projectId: "r3lax-ppw14",
+            storageBucket: "r3lax-ppw14.firebasestorage.app",
+            messagingSenderId: "495353535290",
+            appId: "1:495353535290:web:958d1ef38a6ba429460e03",
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const chatAuth = firebase.auth();
+        const chatAccessGate = document.getElementById('chat-access-gate');
+        const chatAccessHeading = document.getElementById('chat-access-heading');
+        const chatAccessMessage = document.getElementById('chat-access-message');
+        const chatLoginLink = document.getElementById('chat-login-link');
+        const messageList = document.getElementById('message-list');
+
+        chatAuth.onAuthStateChanged((user) => {
+            if (user) {
+                chatAccessGate.classList.add('hidden');
+                messageList.classList.remove('hidden');
+                return;
+            }
+
+            chatAccessHeading.textContent = 'Sign in required';
+            chatAccessMessage.textContent = 'Please sign in to use the chat feature.';
+            chatLoginLink.classList.remove('hidden');
+        }, (error) => {
+            console.error('Unable to verify sign-in status:', error);
+            chatAccessHeading.textContent = 'Unable to check sign-in';
+            chatAccessMessage.textContent = 'Refresh the page and try again.';
+        });
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
